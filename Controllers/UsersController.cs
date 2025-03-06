@@ -1,5 +1,6 @@
 ﻿using BooksApiYayin.Context;
 using BooksApiYayin.Models;
+using BooksApiYayin.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,9 +37,16 @@ namespace BooksApiYayin.Controllers
             return Ok(user);
         }
         [HttpPost("createUser")]
-        public IActionResult CreateUser(User model)
+        public IActionResult CreateUser(CreateUserViewModel model)
         {
-            _dbContext.Users.Add(model);
+            var newmodel = new User
+            {
+                Name = model.Name,
+               Surname= model.Surname,
+               Email = model.Email,
+               Phone = model.Phone
+            };
+            _dbContext.Users.Add(newmodel);
             _dbContext.SaveChanges();
             return Ok("Kullanici olusturuldu.");
         }
